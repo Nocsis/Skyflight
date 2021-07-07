@@ -1,5 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &2402581413568588522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5159096498675548948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5909a79e7de43e34fa3015b815310dbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bridge: {x: 0, y: 0, z: 0}
+  machineroom: {x: 0, y: 0, z: 0}
+  subject: {fileID: 5159096498675457844}
 --- !u!1001 &8033877261903566116
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -83,9 +98,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: SkyflightOculusIngamePrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 7508835216696139275, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
+      propertyPath: rigidbody
+      value: 
+      objectReference: {fileID: 6265447869440931598}
+    - target: {fileID: 7508835216696139275, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
+      propertyPath: colliders.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7508835216696139275, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
+      propertyPath: colliders.Array.data[0]
+      value: 
+      objectReference: {fileID: 9085323438374404885}
     m_RemovedComponents:
     - {fileID: 6583486392919282270, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
+--- !u!1 &5159096498675548948 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2947282852592293424, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
+  m_PrefabInstance: {fileID: 8033877261903566116}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5159096498675457844 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2947282852592126480, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
+  m_PrefabInstance: {fileID: 8033877261903566116}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &6265447869440931598 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 4147049351733617194, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
+  m_PrefabInstance: {fileID: 8033877261903566116}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6858907946059281387 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3481753799711663823, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
@@ -99,5 +141,10 @@ SphereCollider:
 --- !u!4 &1365085453257237279 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9047680186231486011, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
+  m_PrefabInstance: {fileID: 8033877261903566116}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &9085323438374404885 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 1255269862726424113, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
   m_PrefabInstance: {fileID: 8033877261903566116}
   m_PrefabAsset: {fileID: 0}
