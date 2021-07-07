@@ -83,9 +83,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: SkyflightOculusIngamePrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 7508835216696139275, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
+      propertyPath: rigidbody
+      value: 
+      objectReference: {fileID: 6265447869440931598}
+    - target: {fileID: 7508835216696139275, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
+      propertyPath: colliders.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7508835216696139275, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
+      propertyPath: colliders.Array.data[0]
+      value: 
+      objectReference: {fileID: 9085323438374404885}
     m_RemovedComponents:
     - {fileID: 6583486392919282270, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
+--- !u!54 &6265447869440931598 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 4147049351733617194, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
+  m_PrefabInstance: {fileID: 8033877261903566116}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6858907946059281387 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3481753799711663823, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
@@ -99,5 +116,10 @@ SphereCollider:
 --- !u!4 &1365085453257237279 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9047680186231486011, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
+  m_PrefabInstance: {fileID: 8033877261903566116}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &9085323438374404885 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 1255269862726424113, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
   m_PrefabInstance: {fileID: 8033877261903566116}
   m_PrefabAsset: {fileID: 0}
