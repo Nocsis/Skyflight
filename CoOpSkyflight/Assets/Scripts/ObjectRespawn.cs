@@ -7,7 +7,7 @@ public class ObjectRespawn : MonoBehaviour
     private Quaternion originalRotation;
 
     [Tooltip("The GameObject colliders that should trigger respawning")]
-    public Collider[] RespawnColliders;
+    public GameObject[] RespawnColliders;
 
     private void Start()
     {
@@ -17,19 +17,23 @@ public class ObjectRespawn : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        foreach (Collider col in RespawnColliders)
+        foreach (GameObject obj in RespawnColliders)
         {
-            if (GameObject.ReferenceEquals(collision.collider, col))
+            foreach (Collider col in obj.GetComponents(typeof(Collider)))
             {
-                if (gameObject.TryGetComponent<OVRGrabbable>(out OVRGrabbable grabbable))
+                if (GameObject.ReferenceEquals(collision.collider, col))
                 {
-                    if (grabbable.isGrabbed)
+                    if (gameObject.TryGetComponent<OVRGrabbable>(out OVRGrabbable grabbable))
                     {
-                        return;
+                        if (grabbable.isGrabbed)
+                        {
+                            return;
+                        }
                     }
+                    Debug.Log("Respawned");
+                    transform.position = originalPosition;
+                    transform.rotation = originalRotation;
                 }
-                transform.position = originalPosition;
-                transform.rotation = originalRotation;
             }
         }
     }

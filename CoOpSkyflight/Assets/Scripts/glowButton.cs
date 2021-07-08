@@ -23,9 +23,9 @@ public class GlowButton : PushButton
         base.ChangePressedState();
 
         if (pressed)
-            buttonMaterial.EnableKeyword("_EMISSION");
+            buttonMaterial.SetFloat("_ShnIntense", 0.8f);
         else
-            buttonMaterial.DisableKeyword("_EMISSION");
+            buttonMaterial.SetFloat("_ShnIntense", 0f);
 
         DynamicGI.UpdateEnvironment();
     }

@@ -45,11 +45,6 @@ public class PushButton : MonoBehaviour
         StartCoroutine(Push());
     }
 
-    protected void Update()
-    {
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward, Time.deltaTime * 0.2f);
-    }
-
     protected virtual void ChangePressedState()
     {
         pressed = !pressed;
