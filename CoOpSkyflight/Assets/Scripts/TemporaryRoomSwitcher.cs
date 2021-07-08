@@ -35,12 +35,12 @@ namespace MultiUserKit
                     subject.position = machineroom;
                 }
 
-                Debug.Log(subject.position);
+                //Debug.Log(subject.position);
             }
-            else
-            {
-                Debug.Log("Wrong scene");
-            }
+            //else
+            //{
+            //    Debug.Log("Wrong scene");
+            //}
         }
     }
 }
