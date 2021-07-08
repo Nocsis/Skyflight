@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5909a79e7de43e34fa3015b815310dbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bridge: {x: 0, y: 0, z: 0}
-  machineroom: {x: 0, y: 0, z: 0}
   subject: {fileID: 5159096498675457844}
 --- !u!1001 &8033877261903566116
 PrefabInstance:
@@ -34,6 +32,22 @@ PrefabInstance:
       propertyPath: m_grabVolumes.Array.data[0]
       value: 
       objectReference: {fileID: 2753761307914682554}
+    - target: {fileID: 1255269862726424113, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
+      propertyPath: m_Height
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1255269862726424113, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
+      propertyPath: m_Radius
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1255269862726424113, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
+      propertyPath: m_Center.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1255269862726424113, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2945494585959719360, guid: b4bfd6ac03822fb4592785f769d1cef4, type: 3}
       propertyPath: m_IsActive
       value: 1
