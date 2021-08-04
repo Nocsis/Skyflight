@@ -30,7 +30,7 @@ public class ObjectRespawn : MonoBehaviour
                             return;
                         }
                     }
-                    Debug.Log("Respawned");
+                    //Debug.Log("Respawned");
                     transform.position = originalPosition;
                     transform.rotation = originalRotation;
                 }
