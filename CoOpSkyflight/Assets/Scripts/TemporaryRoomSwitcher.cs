@@ -16,7 +16,7 @@ namespace MultiUserKit
                 Debug.LogError("[TempTeleport] Add subject on " + gameObject.name);
 
             bridge = new Vector3(0, 0.3f, 0);
-            machineroom = new Vector3(1, -11.2f, -14.3f);
+            machineroom = new Vector3(-0.16f, -13.07f, -6.98f);
         }
 
         private void Update()
@@ -24,7 +24,7 @@ namespace MultiUserKit
             Scene currentScene = SceneManager.GetActiveScene();
             string sceneName = currentScene.name;
 
-            if (sceneName == "Skyship_Bridge")
+            if (sceneName == "BridgeAndMachineroom")
             {
                 if (InputManager.CheckInput(InputManager.InputTrigger.SecondaryLeft))
                 {
