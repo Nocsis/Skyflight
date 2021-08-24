@@ -15,7 +15,7 @@ namespace MultiUserKit
             if (subject == null)
                 Debug.LogError("[TempTeleport] Add subject on " + gameObject.name);
 
-            bridge = new Vector3(0, 0.3f, 0);
+            bridge = new Vector3(0, 0.6f, 0);
             machineroom = new Vector3(-0.16f, -13.07f, -6.98f);
         }
 
