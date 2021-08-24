@@ -1024,6 +1024,7 @@ namespace Mirror
         {
             // Debug.Log("RegisterStartPosition: (" + start.gameObject.name + ") " + start.position);
             startPositions.Add(start);
+            print(start.name);
 
             // reorder the list so that round-robin spawning uses the start positions
             // in hierarchy order.  This assumes all objects with NetworkStartPosition

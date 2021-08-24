@@ -14928,5 +14928,13 @@ PrefabInstance:
       propertyPath: offlineScene
       value: Assets/Scenes/Bridge LObby.unity
       objectReference: {fileID: 0}
+    - target: {fileID: 5662098648280022259, guid: ad55a9740557ec44c9e7451fbc49841b, type: 3}
+      propertyPath: maxConnections
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5662098648280022259, guid: ad55a9740557ec44c9e7451fbc49841b, type: 3}
+      propertyPath: playerSpawnMethod
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad55a9740557ec44c9e7451fbc49841b, type: 3}
