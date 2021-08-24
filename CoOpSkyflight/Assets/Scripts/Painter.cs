@@ -2,11 +2,9 @@ using UnityEngine;
 
 public class Painter : MonoBehaviour
 {
+    [Tooltip("Recommendateion: Set to the end of painter and set raycastLength to length of painter")]
     [SerializeField]
-    private PaintMode paintMode;
-
-    [SerializeField]
-    private Transform painterTip;
+    private Transform painterOrigin;
 
     [SerializeField]
     private float raycastLength = 0.01f;
@@ -18,14 +16,11 @@ public class Painter : MonoBehaviour
     private Color color;
 
     [SerializeField]
-    private Texture2D brush;
-
-    [SerializeField]
     private Paintable paintable;
 
     private Collider paintableCollider;
 
-    private Stamp stamp;
+    public StampDatabase stampDatabase;
 
     private Vector2? lastDrawPosition = null;
 
@@ -39,31 +34,29 @@ public class Painter : MonoBehaviour
 
     public void Initialize(Paintable newPaintable)
     {
-        stamp = new Stamp(brush);
-        stamp.mode = paintMode;
-
         paintable = newPaintable;
         paintableCollider = newPaintable.GetComponent<Collider>();
     }
 
     private void Update()
     {
-        Ray ray = new Ray(painterTip.position, painterTip.forward);
+        Ray ray = new Ray(painterOrigin.position, painterOrigin.forward);
         RaycastHit hit;
+        Debug.DrawRay(painterOrigin.position, painterOrigin.forward * raycastLength);
 
         if (paintableCollider.Raycast(ray, out hit, raycastLength))
         {
             //Debug.Log("Hit!");
             if (lastDrawPosition.HasValue && lastDrawPosition.Value != hit.textureCoord)
             {
-                Debug.Log("Drawline");
-                paintable.DrawLine(stamp, lastDrawPosition.Value, hit.textureCoord, color, spacing);
+                //Debug.Log("Drawline");
+                paintable.DrawLine(0, lastDrawPosition.Value, hit.textureCoord, color, spacing);
             }
             else
             {
                 //Debug.Log("Splash");
-                Debug.Log("hit.texturecoord: " + hit.textureCoord);
-                paintable.CreateSplash(hit.textureCoord, stamp, color);
+                //Debug.Log("hit.texturecoord: " + hit.textureCoord);
+                paintable.CreateSplash(hit.textureCoord, 0, color);
             }
 
             lastDrawPosition = hit.textureCoord;
@@ -79,15 +72,15 @@ public class Painter : MonoBehaviour
         color = newColor;
     }
 
-    public void ChangePaintMode(PaintMode newPaintMode)
-    {
-        paintMode = newPaintMode;
-        stamp.mode = paintMode;
-    }
+    //public void ChangePaintMode(PaintMode newPaintMode)
+    //{
+    //    paintMode = newPaintMode;
+    //    stamp.mode = paintMode;
+    //}
 
-    public void ChangeStamp(Texture2D newBrush)
-    {
-        stamp = new Stamp(newBrush);
-        stamp.mode = paintMode;
-    }
+    //public void ChangeStamp(Texture2D newBrush)
+    //{
+    //    stamp = new Stamp(newBrush);
+    //    stamp.mode = paintMode;
+    //}
 }

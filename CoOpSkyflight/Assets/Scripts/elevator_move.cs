@@ -29,13 +29,9 @@ public class elevator_move : MonoBehaviour
         upPosition = downPosition + new Vector3(0, 3.3f, 0);
     }
 
-    private void Update()
-    {
-
-    }
-
     public void Move()
     {
+        Debug.Log("Yea... This doesn't work yet.");
         if (_state == ElevatorState.Down)
         {
             _state = ElevatorState.Moving;

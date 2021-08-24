@@ -6,7 +6,7 @@ public class ObjectRespawn : MonoBehaviour
     private Vector3 originalPosition;
     private Quaternion originalRotation;
 
-    [Tooltip("The GameObject colliders that should trigger respawning")]
+    [Tooltip("The GameObjects that should trigger respawning on collission")]
     public GameObject[] RespawnColliders;
 
     private void Start()

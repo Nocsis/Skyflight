@@ -1,9 +1,19 @@
+using System;
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
+using Mirror;
 using UnityEngine;
-using System.IO;
 
 [RequireComponent(typeof(MeshRenderer))]
-public class Paintable : MonoBehaviour
+[RequireComponent(typeof(NetworkTransmitter))]
+public class Paintable : NetworkBehaviour
 {
+    NetworkTransmitter networkTransmitter;
+
+    [SerializeField]
+    private List<Paintable> connectedPaintables;
+
     [SerializeField]
     private Texture2D initialTexture;
 
@@ -17,8 +27,12 @@ public class Paintable : MonoBehaviour
 
     private bool wasModified = false;
 
+    public StampDatabase stampDatabase;
+
     private void Awake()
     {
+        networkTransmitter = GetComponent<NetworkTransmitter>();
+
         if (initialTexture == null)
             initialTexture = GetComponent<MeshRenderer>().material.mainTexture as Texture2D;
 
@@ -29,7 +43,7 @@ public class Paintable : MonoBehaviour
 
         originalTexture = texture.GetPixels32();
 
-        newTexture = new Texture2D(textureWidth, textureHeight, TextureFormat.RGBA32, false, true);
+        newTexture = new Texture2D(textureWidth, textureHeight, TextureFormat.RGB24, false, true);
         newTexture.SetPixels32(initialTexture.GetPixels32());
         newTexture.Apply();
 
@@ -37,6 +51,30 @@ public class Paintable : MonoBehaviour
         newTexture.GetPixels32().CopyTo(currentTexture, 0);
 
         GetComponent<MeshRenderer>().material.mainTexture = newTexture;
+    }
+
+    private void Start()
+    {
+        if (!isServer)
+        {
+            networkTransmitter.OnDataCompletelyReceived += DataCompletelyReceivedHandler;
+            CmdRequestTexture();
+        }
+    }
+
+    [Client]
+    private void DataCompletelyReceivedHandler(int transmissionId, byte[] data)
+    {
+        newTexture.LoadImage(data);
+        newTexture.GetPixels32().CopyTo(currentTexture, 0);
+    }
+
+    [Command(requiresAuthority = false)]
+    private void CmdRequestTexture()
+    {
+        byte[] sendTexture = newTexture.EncodeToJPG();
+
+        StartCoroutine(networkTransmitter.SendBytesToClientsRoutine((int)Time.time + gameObject.GetInstanceID(), sendTexture));
     }
 
     private void LateUpdate()
@@ -51,14 +89,16 @@ public class Paintable : MonoBehaviour
     }
 
     /// Paints one stamp
-    public void CreateSplash(Vector2 uvPosition, Stamp stamp, Color color)
+    public void CreateSplash(Vector2 uvPosition, int stampIndex, Color color)
     {
-        PaintOver(stamp, (Color32)color, uvPosition);
+        CmdPaintOver(stampIndex, (Color32)color, uvPosition);
     }
 
     /// Paints a line that consist of stamps
-    public void DrawLine(Stamp stamp, Vector2 startUVPosition, Vector2 endUVPosition, Color color, float spacing)
+    public void DrawLine(int stampIndex, Vector2 startUVPosition, Vector2 endUVPosition, Color color, float spacing)
     {
+        Stamp stamp = stampDatabase.stamps[stampIndex].stamp;
+
         Vector2 uvDistance = endUVPosition - startUVPosition;
 
         Vector2 pixelDistance = new Vector2(Mathf.Abs(uvDistance.x) * textureWidth, Mathf.Abs(uvDistance.y) * textureHeight);
@@ -72,12 +112,23 @@ public class Paintable : MonoBehaviour
 
             Vector2 uvPosition = Vector2.Lerp(startUVPosition, endUVPosition, lerp);
 
-            PaintOver(stamp, color, uvPosition);
+            CmdPaintOver(stampIndex, color, uvPosition);
         }
     }
 
-    private void PaintOver(Stamp stamp, Color32 color, Vector2 uvPosition)
+    [Command(requiresAuthority = false)]
+    private void CmdPaintOver(int stampIndex, Color32 color, Vector2 uvPosition)
     {
+        RpcPaintOver(stampIndex, color, uvPosition);
+        foreach (Paintable paintable in connectedPaintables)
+            paintable.RpcPaintOver(stampIndex, color, uvPosition);
+    }
+
+    [ClientRpc]
+    public void RpcPaintOver(int stampIndex, Color32 color, Vector2 uvPosition)
+    {
+        Stamp stamp = stampDatabase.stamps[stampIndex].stamp;
+
         //Debug.Log("Paint at" + uvPosition + " with stamp w/h" + stamp.Width + "/" + stamp.Height);
         int paintStartPositionX = (int)((uvPosition.x * textureWidth) - stamp.Width / 2f);
         int paintStartPositionY = (int)((uvPosition.y * textureHeight) - stamp.Height / 2f);
