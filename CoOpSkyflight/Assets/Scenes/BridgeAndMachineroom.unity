@@ -21522,6 +21522,21 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 5041529609684771032, guid: d189445d3f3659141b100568a2313ebb, type: 3}
+--- !u!114 &280057261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280057248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07f934c9f41cb7343b5c32daa680cfeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pushDirection: 1
+  pushDepth: 0.01
+  pressed: 0
 --- !u!114 &280057262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21549,7 +21564,7 @@ MonoBehaviour:
   onPointerClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 280057261}
         m_TargetAssemblyTypeName: PushButton, Assembly-CSharp
         m_MethodName: OnClick
         m_Mode: 1
