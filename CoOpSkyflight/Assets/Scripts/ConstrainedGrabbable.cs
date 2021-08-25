@@ -27,7 +27,11 @@ public class ConstrainedGrabbable : OVRGrabbable
         grabbed = false;
         transform.position = handle.position;
         transform.rotation = handle.rotation;
-        base.GrabEnd(linearVelocity, angularVelocity);
+        
+        base.GrabEnd(Vector3.zero, Vector3.zero);
+
+        handleRB.velocity = Vector3.zero;
+        handleRB.angularVelocity = Vector3.zero;
     }
 
     IEnumerator UpdateHandle()
