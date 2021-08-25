@@ -14,6 +14,10 @@ public class PushButton : MonoBehaviour
         down
     };
 
+    [SerializeField] protected AudioSource audioSource;
+
+    [SerializeField] protected List<AudioClip> audioClips;
+
     [SerializeField] protected Directions pushDirection = Directions.back;
     [SerializeField] protected float pushDepth = 0.01f;
 
@@ -59,6 +63,7 @@ public class PushButton : MonoBehaviour
         }
 
         ChangePressedState();
+        audioSource.PlayOneShot(audioClips[Random.Range(0, audioClips.Count)]);
 
         while (Vector3.Distance(transform.position, originalPos) > 0.001f)
         {

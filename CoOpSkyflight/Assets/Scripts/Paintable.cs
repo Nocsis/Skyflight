@@ -16,7 +16,7 @@ public class Paintable : NetworkBehaviour
     private bool playNotificationSound;
 
     [SerializeField]
-    private float minNotificationDelay;
+    private float minNotificationDelay = 30f;
 
     [SerializeField]
     private AudioSource notificationAudioSource;
@@ -65,6 +65,8 @@ public class Paintable : NetworkBehaviour
         GetComponent<MeshRenderer>().material.mainTexture = newTexture;
 
         lastNotificationTime = Time.realtimeSinceStartup;
+        if (playNotificationSound && notificationAudioSource == null)
+            Debug.LogError("[Paintable] Trying to play notification sounds. Either connect an audio source or disable them.");
     }
 
     private void Start()
@@ -98,11 +100,13 @@ public class Paintable : NetworkBehaviour
             newTexture.SetPixels32(currentTexture);
             newTexture.Apply();
 
-            if (playNotificationSound && lastNotificationTime + minNotificationDelay >= Time.realtimeSinceStartup)
+            foreach(Paintable paintable in connectedPaintables)
             {
-                notificationAudioSource.PlayOneShot(notificationAudioSource.clip);
-
-                lastNotificationTime = Time.realtimeSinceStartup;
+                if (paintable.playNotificationSound && Time.realtimeSinceStartup > (paintable.lastNotificationTime + paintable.minNotificationDelay))
+                {
+                    paintable.notificationAudioSource.PlayOneShot(notificationAudioSource.clip);
+                    paintable.lastNotificationTime = Time.realtimeSinceStartup;
+                }
             }
 
             wasModified = false;

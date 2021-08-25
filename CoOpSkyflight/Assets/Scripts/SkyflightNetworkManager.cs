@@ -46,12 +46,4 @@ public class SkyflightNetworkManager : MultiUserKit.NetworkManager
         ActivePlayers.Add(player.GetComponent<LocalUser>());
         Debug.Log("Active Players (1): " + ActivePlayers.Count);
     }
-
-    public override void OnServerConnect(NetworkConnection conn)
-    {
-        base.OnServerConnect(conn);
-        print("------CONN:--------");
-        print(conn);
-        print(conn.connectionId);
-    }
 }

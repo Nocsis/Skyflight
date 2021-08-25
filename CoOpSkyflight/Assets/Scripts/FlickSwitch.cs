@@ -11,6 +11,9 @@ public class FlickSwitch : MonoBehaviour
         Z
     };
 
+    [SerializeField]
+    protected AudioSource audioSource;
+
     [SerializeField] protected Axes rotationAxis = Axes.Z;
     
     [SerializeField] protected float turnDegrees = -130f;
@@ -57,6 +60,8 @@ public class FlickSwitch : MonoBehaviour
 
     protected IEnumerator Flick()
     {
+        audioSource.PlayOneShot(audioSource.clip);
+
         if (!active)
         {
             while (Quaternion.Angle(transform.rotation, activeRot) > 0.1f)
