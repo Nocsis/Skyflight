@@ -11,6 +11,18 @@ public class Paintable : NetworkBehaviour
 {
     NetworkTransmitter networkTransmitter;
 
+    [Tooltip("Needs a connected Audio Source")]
+    [SerializeField]
+    private bool playNotificationSound;
+
+    [SerializeField]
+    private float minNotificationDelay;
+
+    [SerializeField]
+    private AudioSource notificationAudioSource;
+
+    private float lastNotificationTime;
+
     [SerializeField]
     private List<Paintable> connectedPaintables;
 
@@ -51,6 +63,8 @@ public class Paintable : NetworkBehaviour
         newTexture.GetPixels32().CopyTo(currentTexture, 0);
 
         GetComponent<MeshRenderer>().material.mainTexture = newTexture;
+
+        lastNotificationTime = Time.realtimeSinceStartup;
     }
 
     private void Start()
@@ -83,6 +97,13 @@ public class Paintable : NetworkBehaviour
         {
             newTexture.SetPixels32(currentTexture);
             newTexture.Apply();
+
+            if (playNotificationSound && lastNotificationTime + minNotificationDelay >= Time.realtimeSinceStartup)
+            {
+                notificationAudioSource.PlayOneShot(notificationAudioSource.clip);
+
+                lastNotificationTime = Time.realtimeSinceStartup;
+            }
 
             wasModified = false;
         }

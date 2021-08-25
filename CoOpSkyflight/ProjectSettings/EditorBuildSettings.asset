@@ -14,10 +14,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Skyship_Bridge.unity
     guid: c71d6dc596c959e4999c566668349fad
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Machineroom Lobby.unity
     guid: 098845cc61ee77948845268efe67e424
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Skyship_Machineroom.unity
     guid: 5bfd10a46a14336498e8f375ad410695
   m_configObjects:
