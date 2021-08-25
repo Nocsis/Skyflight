@@ -11,14 +11,14 @@ public class FlickSwitch : MonoBehaviour
         Z
     };
 
-    [SerializeField] protected Axes rotationAxis = Axes.X;
+    [SerializeField] protected Axes rotationAxis = Axes.Z;
     
-    [SerializeField] protected float turnDegrees = 30f;
+    [SerializeField] protected float turnDegrees = -130f;
 
-    [Tooltip("Place GameObject in inactive state. If active=true, rotation will be changed by turnDegrees on Awake.")]
+    [Tooltip("Always place GameObject in inactive state. If active=true, rotation will be changed by turnDegrees on Awake.")]
     [SerializeField] protected bool active = false;
 
-    [SerializeField] protected float flickSpeed = 10;
+    [SerializeField] protected float flickSpeed = 200;
 
     protected Quaternion originalRot;
     protected Quaternion activeRot;
@@ -36,6 +36,8 @@ public class FlickSwitch : MonoBehaviour
         else if (rotationAxis == Axes.Z)
             activeRot = originalRot * Quaternion.Euler(0, 0, turnDegrees);
 
+        if (active)
+            transform.rotation = activeRot;
     }
 
     public void OnClick()
@@ -46,6 +48,11 @@ public class FlickSwitch : MonoBehaviour
     protected virtual void ChangeActiveState()
     {
         active = !active;
+    }
+
+    protected virtual bool GetActiveState()
+    {
+        return active;
     }
 
     protected IEnumerator Flick()

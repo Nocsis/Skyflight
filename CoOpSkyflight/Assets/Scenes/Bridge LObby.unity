@@ -9946,6 +9946,54 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1337819272 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5662098648280022257, guid: ad55a9740557ec44c9e7451fbc49841b, type: 3}
+  m_PrefabInstance: {fileID: 5662098649477951977}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1337819273 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5662098648280022256, guid: ad55a9740557ec44c9e7451fbc49841b, type: 3}
+  m_PrefabInstance: {fileID: 5662098649477951977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337819272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7424c1070fad4ba2a7a96b02fbeb4bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1337819274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337819272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 798e4dc4cb867f94f9fc00fff09b344e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dontDestroyOnLoad: 1
+  PersistNetworkManagerToOfflineScene: 0
+  runInBackground: 1
+  autoStartServerBuild: 1
+  serverTickRate: 30
+  serverBatching: 1
+  serverBatchInterval: 0
+  offlineScene: Assets/Scenes/Bridge LObby.unity
+  onlineScene: Assets/Scenes/BridgeAndMachineroom.unity
+  transport: {fileID: 1337819273}
+  networkAddress: localhost
+  maxConnections: 2
+  disconnectInactiveConnections: 0
+  disconnectInactiveTimeout: 60
+  authenticator: {fileID: 0}
+  playerPrefab: {fileID: 3492208385403914065, guid: b865628c796261a49bdf01c5539da94a, type: 3}
+  autoCreatePlayer: 0
+  playerSpawnMethod: 0
+  spawnPrefabs: []
+  ActivePlayers: []
 --- !u!1001 &1372700288
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14936,5 +14984,6 @@ PrefabInstance:
       propertyPath: playerSpawnMethod
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5662098648280022259, guid: ad55a9740557ec44c9e7451fbc49841b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ad55a9740557ec44c9e7451fbc49841b, type: 3}

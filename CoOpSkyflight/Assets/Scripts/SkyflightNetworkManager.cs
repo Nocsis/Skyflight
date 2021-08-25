@@ -3,43 +3,18 @@ using MultiUserKit;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkyflightNetworkManager : Mirror.NetworkManager
+public class SkyflightNetworkManager : MultiUserKit.NetworkManager
 {
-    public static SkyflightNetworkManager Instance;
-
-    public Transform spawnPoint;
-
-    int players = 0;
-
-    private new void Awake()
-    {
-        DontDestroyOnLoad(this);
-        Instance = this;
-
-#if UNITY_STANDALONE_LINUX
-        StartServer();
-#endif
-        }
+    int skyflightPlayers = 0;
+    Vector3 spawnPoint;
+    Vector3 spawn1 = new Vector3(-0.5f, 3.3f, -5f);
+    Vector3 spawn2 = new Vector3(-1f, -13f, -9.5f);
 
     public override void OnStartServer()
     {
         base.OnStartServer();
         NetworkServer.RegisterHandler<CreateUserMessage>(OnCreateCharacter);
     }
-
-    public override void OnClientConnect(NetworkConnection conn)
-    {
-        base.OnClientConnect(conn);
-
-        CreateUserMessage characterMessage = new CreateUserMessage
-        {
-            userName = UserNameInputFieldHandler.UserName == "" ? PlatformDetector.GetCurrentPlatform().label : UserNameInputFieldHandler.UserName
-        };
-
-        conn.Send(characterMessage);
-    }
-
-    public List<LocalUser> ActivePlayers = new List<LocalUser>();
 
     void OnCreateCharacter(NetworkConnection conn, CreateUserMessage message)
     {
@@ -53,29 +28,30 @@ public class SkyflightNetworkManager : Mirror.NetworkManager
             }
         }
 
-        spawnPoint = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
+        //Oh my god this is so dirty. Dont do this. Bad dev. Bad.
+        if (conn.connectionId == 0)
+            spawnPoint = spawn1;
+        else
+            spawnPoint = spawn2;
 
-        GameObject player = Instantiate(playerPrefab, spawnPoint == null ? new Vector3(0, 0, 0) : spawnPoint.position, Quaternion.identity);
+        GameObject player = Instantiate(playerPrefab, spawnPoint, Quaternion.identity);
         NetworkServer.Spawn(player);
 
         player.GetComponent<NetworkUser>().PlayerName = message.userName;
         NetworkServer.AddPlayerForConnection(conn, player.gameObject);
 
-        players++;
-        //Debug.Log(players + " Players.");
+        skyflightPlayers++;
+        Debug.Log(skyflightPlayers + " Players.");
 
         ActivePlayers.Add(player.GetComponent<LocalUser>());
-        //Debug.Log("Active Players (1): " + ActivePlayers.Count);
+        Debug.Log("Active Players (1): " + ActivePlayers.Count);
     }
 
-    public static void CreateServer()
+    public override void OnServerConnect(NetworkConnection conn)
     {
-        Instance.StartHost();
-    }
-
-    public static void JoinServer()
-    {
-        Instance.networkAddress = IPInputFieldHandler.IP;
-        Instance.StartClient();
+        base.OnServerConnect(conn);
+        print("------CONN:--------");
+        print(conn);
+        print(conn.connectionId);
     }
 }
