@@ -4,15 +4,17 @@ namespace MultiUserKit
 {
     public class Ingameintercafehandler : MonoBehaviour
     {
-        public GameObject theInterface, creditsBtn, backBtn;
+        public GameObject theInterface, creditsBtn, backBtn, CreditsPlayer;
 
-        public Transform subject;
+        public Transform subject, CreditsPosition;
 
-        public Vector3 CreditsPosition;
         private Vector3 backPosition;
 
         void Start()
         {
+            CreditsPosition = GameObject.FindGameObjectWithTag("CreditsPosition").transform;
+            CreditsPlayer = GameObject.FindGameObjectWithTag("CreditsPlayer");
+
             creditsBtn.SetActive(true);
             backBtn.SetActive(false);
             SetInterfaceActive(false);
@@ -35,8 +37,10 @@ namespace MultiUserKit
         public void GotoCredits()
         {
             backPosition = subject.position;
-            subject.position = CreditsPosition;
-            
+            subject.position = CreditsPosition.position;
+
+            CreditsPlayer.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
+
             creditsBtn.SetActive(false);
             backBtn.SetActive(true);
             SetInterfaceActive(false);
@@ -45,6 +49,8 @@ namespace MultiUserKit
         public void returnFromCredits()
         {
             subject.position = backPosition;
+
+            CreditsPlayer.GetComponent<UnityEngine.Video.VideoPlayer>().Stop();
 
             creditsBtn.SetActive(true);
             backBtn.SetActive(false);

@@ -525,7 +525,7 @@ MonoBehaviour:
   creditsBtn: {fileID: 5712034350439906176}
   backBtn: {fileID: 9216568960215496403}
   subject: {fileID: 5159096498675457844}
-  CreditsPosition: {x: 0, y: 2, z: 0}
+  CreditsPosition: {x: 14.55, y: -0.5, z: -7.5}
 --- !u!1 &6592023073604273795
 GameObject:
   m_ObjectHideFlags: 0
