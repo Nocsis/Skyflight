@@ -6,6 +6,8 @@ using MultiUserKit;
 public class elevator_move : MonoBehaviour
 {
     private Transform elevator, railing;
+
+    [SerializeField]
     private Vector3 downPosition, upPosition;
 
     private Transform railingMidLeft, railingMidRight, railingLeft, railingRight;
@@ -24,14 +26,12 @@ public class elevator_move : MonoBehaviour
         railingMidRight = railing.Find("slide_mid_right");
         railingLeft = railing.Find("slide_left"); ;
         railingRight = railing.Find("slide_right");
-        _state = ElevatorState.Down;
         downPosition = elevator.position;
         upPosition = downPosition + new Vector3(0, 3.3f, 0);
     }
 
     public void Move()
     {
-        Debug.Log("Yea... This doesn't work yet.");
         if (_state == ElevatorState.Down)
         {
             _state = ElevatorState.Moving;
