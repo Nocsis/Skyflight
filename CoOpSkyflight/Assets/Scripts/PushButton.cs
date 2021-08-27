@@ -28,6 +28,11 @@ public class PushButton : MonoBehaviour
 
     protected virtual void Awake()
     {
+        
+    }
+
+    public void OnClick()
+    {
         originalPos = transform.position;
 
         if (pushDirection == Directions.back)
@@ -42,10 +47,7 @@ public class PushButton : MonoBehaviour
             pushedPos = originalPos - transform.up * pushDepth;
         else if (pushDirection == Directions.up)
             pushedPos = originalPos + transform.up * pushDepth;
-    }
 
-    public void OnClick()
-    {
         StartCoroutine(Push());
     }
 

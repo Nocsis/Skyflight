@@ -1,20 +1,18 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using MultiUserKit;
 
 public class elevator_move : MonoBehaviour
 {
     private Transform elevator, railing;
 
     [SerializeField]
-    private Vector3 downPosition, upPosition;
+    public Transform downPosition, upPosition;
 
-    private Transform railingMidLeft, railingMidRight, railingLeft, railingRight;
-    [SerializeField] private Transform rotLeftClosed, rotLeftOpen, rotRightClosed, rotRightOpen, rotMLeftClosed, rotMLeftDown, rotMLeftUp, rotMRightClosed, rotMRightDown, rotMRightUp;
+    private Transform railingMidLeft, railingMidRight;
+    [SerializeField] private Transform rotMidLeftClosed, rotMidLeftOpen, rotMRightClosed, rotMidRightOpen;
 
-    private enum ElevatorState {Up, Down, Moving};
-    [SerializeField] private ElevatorState _state;
+    public enum ElevatorState {Up, Down, Moving};
+    [SerializeField] public ElevatorState _state;
 
     [SerializeField] private float speed = 1;
 
@@ -24,10 +22,9 @@ public class elevator_move : MonoBehaviour
         railing = transform.Find("Slide railing");
         railingMidLeft = railing.Find("slide_mid_left");
         railingMidRight = railing.Find("slide_mid_right");
-        railingLeft = railing.Find("slide_left"); ;
-        railingRight = railing.Find("slide_right");
-        downPosition = elevator.position;
-        upPosition = downPosition + new Vector3(0, 3.3f, 0);
+
+        railingMidLeft.rotation = rotMidLeftOpen.rotation;
+        railingMidRight.rotation = rotMidRightOpen.rotation;
     }
 
     public void Move()
@@ -44,63 +41,25 @@ public class elevator_move : MonoBehaviour
         }
     }
 
-    private Transform FindNearestPlayer()
-    {
-        Transform nearestPlayer = null;
-        float nearestDistance = 9999f;
-
-        //foreach (LocalUser user in NetworkManager.Instance.ActivePlayers)
-        //{
-        //    float currDistance = Vector3.Distance(elevator.position, user.transform.position);
-        //    if (currDistance < nearestDistance)
-        //    {
-        //        nearestDistance = currDistance;
-        //        nearestPlayer = user;
-        //    }
-        //}
-
-        List<Transform> allPlayers = new List<Transform>();
-        foreach(NetworkUser user in FindObjectsOfType<NetworkUser>())
-        {
-            Debug.Log(user.gameObject.name);
-            float currDistance = Vector3.Distance(elevator.position, user.transform.position);
-            if (currDistance < nearestDistance)
-            {
-                nearestDistance = currDistance;
-                nearestPlayer = user.transform;
-            }
-        }
-
-        return nearestPlayer;
-    }
-
     private IEnumerator MoveUpwards()
     {
-        while (railingMidLeft.rotation != rotMLeftClosed.rotation)
+        while (railingMidLeft.rotation != rotMidLeftClosed.rotation)
         {
-            railingMidLeft.rotation = Quaternion.Lerp(railingMidLeft.rotation, rotMLeftClosed.rotation, speed * Time.deltaTime);
+            railingMidLeft.rotation = Quaternion.Lerp(railingMidLeft.rotation, rotMidLeftClosed.rotation, speed * Time.deltaTime);
             railingMidRight.rotation = Quaternion.Lerp(railingMidRight.rotation, rotMRightClosed.rotation, speed * Time.deltaTime);
             yield return null;
         }
 
-        Transform player = FindNearestPlayer();
-        if(player != null)
-            player.SetParent(elevator);
-
-        while (Vector3.Distance(upPosition, elevator.position) > 0.01)
+        while (Vector3.Distance(upPosition.position, elevator.position) > 0.01)
         {
-            elevator.position = Vector3.Lerp(elevator.position, upPosition, speed * Time.deltaTime);
+            elevator.position = Vector3.Lerp(elevator.position, upPosition.position, speed * Time.deltaTime);
             yield return null;
         }
 
-        player.parent = null;
-
-        while (railingMidLeft.rotation != rotMLeftUp.rotation && railingLeft.rotation != rotLeftOpen.rotation)
+        while (railingMidLeft.rotation != rotMidLeftOpen.rotation)
         {
-            railingMidLeft.rotation = Quaternion.Lerp(railingMidLeft.rotation, rotMLeftUp.rotation, speed * Time.deltaTime);
-            railingMidRight.rotation = Quaternion.Lerp(railingMidRight.rotation, rotMRightUp.rotation, speed * Time.deltaTime);
-            railingLeft.rotation = Quaternion.Lerp(railingLeft.rotation, rotLeftOpen.rotation, speed * Time.deltaTime);
-            railingRight.rotation = Quaternion.Lerp(railingRight.rotation, rotRightOpen.rotation, speed * Time.deltaTime);
+            railingMidLeft.rotation = Quaternion.Lerp(railingMidLeft.rotation, rotMidLeftOpen.rotation, speed * Time.deltaTime);
+            railingMidRight.rotation = Quaternion.Lerp(railingMidRight.rotation, rotMidRightOpen.rotation, speed * Time.deltaTime);
             yield return null;
         }
 
@@ -109,34 +68,42 @@ public class elevator_move : MonoBehaviour
 
     private IEnumerator MoveDownwards()
     {
-        while (railingMidLeft.rotation != rotMLeftClosed.rotation && railingLeft.rotation != rotLeftClosed.rotation)
+        while (railingMidLeft.rotation != rotMidLeftClosed.rotation)
         {
-            railingMidLeft.rotation = Quaternion.Lerp(railingMidLeft.rotation, rotMLeftClosed.rotation, speed * Time.deltaTime);
+            railingMidLeft.rotation = Quaternion.Lerp(railingMidLeft.rotation, rotMidLeftClosed.rotation, speed * Time.deltaTime);
             railingMidRight.rotation = Quaternion.Lerp(railingMidRight.rotation, rotMRightClosed.rotation, speed * Time.deltaTime);
-            railingLeft.rotation = Quaternion.Lerp(railingLeft.rotation, rotLeftClosed.rotation, speed * Time.deltaTime);
-            railingRight.rotation = Quaternion.Lerp(railingRight.rotation, rotRightClosed.rotation, speed * Time.deltaTime);
             yield return null;
         }
 
-        Transform player = FindNearestPlayer();
-        if (player != null)
-            player.SetParent(elevator);
-
-        while (Vector3.Distance(downPosition, elevator.position) > 0.01)
+        while (Vector3.Distance(downPosition.position, elevator.position) > 0.01)
         {
-            elevator.position = Vector3.Lerp(elevator.position, downPosition, speed * Time.deltaTime);
+            elevator.position = Vector3.Lerp(elevator.position, downPosition.position, speed * Time.deltaTime);
             yield return null;
         }
 
-        player.parent = null;
-
-        while (railingMidLeft.rotation != rotMLeftDown.rotation)
+        while (railingMidLeft.rotation != rotMidLeftOpen.rotation)
         {
-            railingMidLeft.rotation = Quaternion.Lerp(railingMidLeft.rotation, rotMLeftDown.rotation, speed * Time.deltaTime);
-            railingMidRight.rotation = Quaternion.Lerp(railingMidRight.rotation, rotMRightDown.rotation, speed * Time.deltaTime);
+            railingMidLeft.rotation = Quaternion.Lerp(railingMidLeft.rotation, rotMidLeftOpen.rotation, speed * Time.deltaTime);
+            railingMidRight.rotation = Quaternion.Lerp(railingMidRight.rotation, rotMidRightOpen.rotation, speed * Time.deltaTime);
             yield return null;
         }
 
         _state = ElevatorState.Down;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.root.name == "NetworkUserPrefab(Clone)") //dirtyyyyyyyyyyyyy way to find player collider
+        {
+            other.transform.root.SetParent(transform);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.transform.root.name == "NetworkUserPrefab(Clone)")
+        {
+            other.transform.root.parent = null;
+        }
     }
 }

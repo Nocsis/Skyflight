@@ -6,8 +6,6 @@ public class LobbyInterfaceHandler : MonoBehaviour
 {
     public GameObject[] menu1, menu2, menu3, menu4;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         SetActiveMenu1(true);
